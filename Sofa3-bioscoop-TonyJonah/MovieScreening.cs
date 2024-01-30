@@ -4,17 +4,18 @@
     {
         private DateTime dateAndTime { get; set; }
         private double pricePerSeat { get; set; }
+        private List<MovieTicket> ticketList { get; set; }
 
-        public MovieScreening(DateTime dateAndTime, double pricePerSeat)
+
+        public MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSeat)
         {
             this.dateAndTime = dateAndTime;
             this.pricePerSeat = pricePerSeat;
+            this.ticketList = new List<MovieTicket>();
         }
-
         public double getPricePerSeat()
         {
-            //ToDo: Implement getPricePerSeat function.
-            return 0;
+            return pricePerSeat;
         }
         public override string? ToString()
         {

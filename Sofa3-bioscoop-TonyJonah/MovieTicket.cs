@@ -6,17 +6,22 @@
         private int seatNr { get; set; }
 
         private bool isPremium { get; set; }
+        private MovieScreening movieScreening { get; set; }
 
-        public MovieTicket(int rowNr, int seatNr, bool isPremium)
+        public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium)
         {
+            this.movieScreening = movieScreening;
             this.rowNr = rowNr;
             this.seatNr = seatNr;
             this.isPremium = isPremium;
         }
+        public bool isPremiumTicket()
+        {
+            return isPremium;
+        }
         public double getPrice()
         {
-            //ToDo: Implement getPrice function.
-            return 0;
+            return movieScreening.getPricePerSeat();
         }
         public override string? ToString()
         {
