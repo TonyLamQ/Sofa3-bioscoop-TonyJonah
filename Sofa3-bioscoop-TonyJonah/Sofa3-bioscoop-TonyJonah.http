@@ -1,0 +1,6 @@
+@Sofa3_bioscoop_TonyJonah_HostAddress = http://localhost:5287
+
+GET {{Sofa3_bioscoop_TonyJonah_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
