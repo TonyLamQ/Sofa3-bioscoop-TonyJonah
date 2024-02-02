@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Text.Json;
 
 namespace Sofa3_bioscoop_TonyJonah
 {
@@ -73,21 +74,32 @@ namespace Sofa3_bioscoop_TonyJonah
                     Console.WriteLine($"Order exported to {fileName} in plain text format.");
                     break;
                 case TicketExportFormat.Json:
-                    string fileName = $"Order_{orderNr}_Json.json";
+                    string file = $"Order_{orderNr}_Json.json";
 
-                    using (StreamWriter writer = new StreamWriter(fileName))
+                    using (StreamWriter writer = new StreamWriter(file))
                     {
-                        string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+                        var jsonOptions = new JsonSerializerOptions
+                        {
+                            WriteIndented = true
+                        };
+
+                        string json = JsonSerializer.Serialize(this, jsonOptions);
                         writer.Write(json);
                     }
 
-                    Console.WriteLine($"Order exported to {fileName} in JSON format.");
+                    Console.WriteLine($"Order exported to {file} in JSON format.");
                     break;
                 default:
                     Console.WriteLine("Unsupported export format");
                     break;
             }
         }
+        public enum TicketExportFormat
+        {
+            PlainText,
+            Json
+        }
+
 
     }
 }
