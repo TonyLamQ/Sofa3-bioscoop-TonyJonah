@@ -1,4 +1,6 @@
-﻿namespace Sofa3_bioscoop_TonyJonah
+﻿using System.Xml;
+
+namespace Sofa3_bioscoop_TonyJonah
 {
     public class Order
     {
@@ -18,11 +20,11 @@
         {
             this.movieTickets.Add(ticket);
         }
-        public decimal calculatePrice()
+        public double calculatePrice()
         {
             //ToDo: Implement calculatePrice function.
-            List<int> duringWeek = new List<int>() { 1, 2, 3, 4 };
-            List<int> weekend = new List<int>() { 6, 0 };
+            List<int> duringWeek = new List<int>(1, 2, 3, 4);
+            List<int> weekend = new List<int>(6, 0);
             int today = (int)DateTime.Today.DayOfWeek;
             decimal totalPrice = 0.00M;
             int ticketCount = movieTickets.Count;
@@ -34,7 +36,7 @@
             for (int i = 0; i < ticketCount; i++)
             {
                 MovieTicket ticket = movieTickets[i];
-                decimal ticketPrice = (decimal)ticket.getPrice();
+                double ticketprice = ticket.getPrice();
                 bool isPremium = ticket.isPremiumTicket();
                 decimal addPrice = isPremium ? (isStudent ? 2M : 3M) : 0M;
                 totalPrice += ticketCount * (ticketPrice + addPrice);
@@ -46,9 +48,45 @@
             }
             return totalPrice;
         }
+
         public void export(TicketExportFormat format)
         {
-            //ToDo: Implement export function.
+            switch (format)
+            {
+                case TicketExportFormat.PlainText:
+                    string fileName = $"Order_{orderNr}_PlainText.txt";
+
+                    using (StreamWriter writer = new StreamWriter(fileName))
+                    {
+                        writer.WriteLine($"Order Number: {orderNr}");
+                        writer.WriteLine($"Is Student: {isStudent}");
+                        writer.WriteLine("Movie Tickets:");
+
+                        foreach (var ticket in movieTickets)
+                        {
+                            writer.WriteLine($"- {ticket}");
+                        }
+
+                        writer.WriteLine($"Total Price: {calculatePrice():C}");
+                    }
+
+                    Console.WriteLine($"Order exported to {fileName} in plain text format.");
+                    break;
+                case TicketExportFormat.Json:
+                    string fileName = $"Order_{orderNr}_Json.json";
+
+                    using (StreamWriter writer = new StreamWriter(fileName))
+                    {
+                        string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+                        writer.Write(json);
+                    }
+
+                    Console.WriteLine($"Order exported to {fileName} in JSON format.");
+                    break;
+                default:
+                    Console.WriteLine("Unsupported export format");
+                    break;
+            }
         }
 
     }
