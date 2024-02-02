@@ -21,38 +21,28 @@
         public double calculatePrice()
         {
             //ToDo: Implement calculatePrice function.
-            List<int> duringWeek = [1,2,3,4];
-            List<int> weekend = [6,0];
+            List<int> duringWeek = new List<int>(1, 2, 3, 4);
+            List<int> weekend = new List<int>(6,0);
             int today = (int)DateTime.Today.DayOfWeek;
+            decimal totalPrice = 0.00M;
             int ticketCount = movieTickets.Count;
-            double totalPrice = 0.00;
-            //Sunday = 0, Saturday = 6
+            if(isStudent)
+            {
+                int freeTickets = ticketCount / 2;
+                ticketCount -= freeTickets;
+            }
             for (int i = 0; i < ticketCount; i++)
             {
                 MovieTicket ticket = movieTickets[i];
                 double ticketprice = ticket.getPrice();
                 bool isPremium = ticket.isPremiumTicket();
-                if (isStudent)
-                {
-                    int freeTickets = ticketCount / 2;
-                    ticketCount -= freeTickets;
-                    if (isPremium)
-                    {
-                        totalPrice += ticketprice+2.00;
-                    }
-                }
-                else
-                {
-                    if (isPremium)
-                    {
-                        totalPrice += ticketprice + 3.00;
-                    }
-                    if (weekend.Contains(today) && ticketCount >= 6)
-                    {
-                        totalPrice *= 0.9;
-                    }
-                }
+                decimal addPrice = isPremium ? (isStudent ? 2M : 3M) : 0M;
+                totalPrice += ticketCount * (ticketPrice + addPrice);
 
+                if (weekend.Contains(today) && ticketCount >= 6)
+                {
+                    totalPrice *= 0.9M;
+                }
             }
             return totalPrice;
         }
