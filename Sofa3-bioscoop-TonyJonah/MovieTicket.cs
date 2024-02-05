@@ -2,26 +2,31 @@
 {
     public class MovieTicket
     {
-        private int rowNr { get; set; }
-        private int seatNr { get; set; }
+        private int RowNr { get; set; }
+        private int SeatNr { get; set; }
 
-        private bool isPremium { get; set; }
-        private MovieScreening movieScreening { get; set; }
+        private bool IsPremium { get; set; }
+        private MovieScreening MovieScreening { get; set; }
 
         public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium)
         {
-            this.movieScreening = movieScreening;
-            this.rowNr = rowNr;
-            this.seatNr = seatNr;
-            this.isPremium = isPremium;
+            this.MovieScreening = movieScreening;
+            this.RowNr = rowNr;
+            this.SeatNr = seatNr;
+            this.IsPremium = isPremium;
         }
-        public bool isPremiumTicket()
+        public bool IsPremiumTicket()
         {
-            return isPremium;
+            return IsPremium;
         }
-        public double getPrice()
+        public double GetPrice()
         {
-            return movieScreening.getPricePerSeat();
+            return MovieScreening.GetPricePerSeat();
+        }
+
+        public DateTime GetScreeningDate()
+        {
+            return MovieScreening.GetDate();
         }
         public override string? ToString()
         {

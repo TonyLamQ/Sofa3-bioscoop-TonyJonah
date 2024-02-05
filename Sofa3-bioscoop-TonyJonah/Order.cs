@@ -1,5 +1,7 @@
-﻿using System.Xml;
+﻿using System.Text;
+using System.Xml;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Sofa3_bioscoop_TonyJonah
 {
@@ -37,8 +39,8 @@ namespace Sofa3_bioscoop_TonyJonah
             for (int i = 0; i < ticketCount; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
-                decimal ticketPrice = (decimal)ticket.getPrice();
-                bool isPremium = ticket.isPremiumTicket();
+                decimal ticketPrice = (decimal)ticket.GetPrice();
+                bool isPremium = ticket.IsPremiumTicket();
                 decimal addPrice = isPremium ? (IsStudent ? 2M : 3M) : 0M;
                 totalPrice += ticketCount * (ticketPrice + addPrice);
 
@@ -54,52 +56,50 @@ namespace Sofa3_bioscoop_TonyJonah
         {
             switch (format)
             {
-                case TicketExportFormat.PlainText:
-                    string fileName = $"Order_{OrderNr}_PlainText.txt";
-
-                    using (StreamWriter writer = new StreamWriter(fileName))
-                    {
-                        writer.WriteLine($"Order Number: {OrderNr}");
-                        writer.WriteLine($"Is Student: {IsStudent}");
-                        writer.WriteLine("Movie Tickets:");
-
-                        foreach (var ticket in MovieTickets)
-                        {
-                            writer.WriteLine($"- {ticket}");
-                        }
-
-                        writer.WriteLine($"Total Price: {CalculatePrice():C}");
-                    }
-
-                    Console.WriteLine($"Order exported to {fileName} in plain text format.");
+                case TicketExportFormat.PLAINTEXT:
+                    ExportToPlainText();
                     break;
-                case TicketExportFormat.Json:
-                    string file = $"Order_{OrderNr}_Json.json";
-
-                    using (StreamWriter writer = new StreamWriter(file))
-                    {
-                        var jsonOptions = new JsonSerializerOptions
-                        {
-                            WriteIndented = true
-                        };
-
-                        string json = JsonSerializer.Serialize(this, jsonOptions);
-                        writer.Write(json);
-                    }
-
-                    Console.WriteLine($"Order exported to {file} in JSON format.");
-                    break;
-                default:
-                    Console.WriteLine("Unsupported export format");
+                case TicketExportFormat.JSON:
+                    ExportToJson();
                     break;
             }
         }
-        public enum TicketExportFormat
+        
+        private void ExportToPlainText()
         {
-            PlainText,
-            Json
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Order: {this.OrderNr} | Price: {this.CalculatePrice():C2}");
+            foreach (MovieTicket ticket in MovieTickets)
+                sb.AppendLine(ticket.ToString());
+
+            string path = Path.Combine(Path.GetTempPath(), "", $"docentoscoop_order_{this.OrderNr}.txt");
+            File.WriteAllText(path, sb.ToString());
         }
 
+        private void ExportToJson()
+        {
+            JsonObject jsonOrder = new JsonObject
+            {
+                { "orderNr", this.OrderNr },
+                { "isStudentOrder", this.IsStudent },
+                { "totalPrice", this.CalculatePrice() }
+            };
 
+            JsonArray jsonTickets = new JsonArray();
+            foreach (MovieTicket ticket in MovieTickets)
+            {
+                JsonObject jsonTicket = new JsonObject
+                {
+                    { "screeningDate", ticket.GetScreeningDate() },
+                    { "isPremiumTicket", ticket.IsPremiumTicket() },
+                    { "price", ticket.GetPrice() },
+                };
+                jsonTickets.Add(jsonTicket);
+            }
+            jsonOrder.Add("tickets", jsonTickets);
+
+            string path = Path.Combine(Path.GetTempPath(), "", $"docentoscoop_order_{this.OrderNr}.json");
+            File.WriteAllText(path, jsonOrder.ToString());
+        }
     }
 }
