@@ -5,15 +5,15 @@ namespace Sofa3_bioscoop_TonyJonah
 {
     public class Order
     {
-        private int orderNr { get; set; }
-        private bool isStudent { get; set; }
+        private int OrderNr { get; set; }
+        private bool IsStudent { get; set; }
 
         private List<MovieTicket> MovieTickets { get; set; }
 
         public Order(int orderNr, bool isStudent)
         {
-            this.orderNr = orderNr;
-            this.isStudent = isStudent;
+            this.OrderNr = orderNr;
+            this.IsStudent = isStudent;
             MovieTickets = new List<MovieTicket>();
 
         }
@@ -29,7 +29,7 @@ namespace Sofa3_bioscoop_TonyJonah
             int today = (int)DateTime.Today.DayOfWeek;
             decimal totalPrice = 0.00M;
             int ticketCount = MovieTickets.Count;
-            if (isStudent)
+            if (IsStudent)
             {
                 int freeTickets = ticketCount / 2;
                 ticketCount -= freeTickets;
@@ -39,7 +39,7 @@ namespace Sofa3_bioscoop_TonyJonah
                 MovieTicket ticket = MovieTickets[i];
                 decimal ticketPrice = (decimal)ticket.getPrice();
                 bool isPremium = ticket.isPremiumTicket();
-                decimal addPrice = isPremium ? (isStudent ? 2M : 3M) : 0M;
+                decimal addPrice = isPremium ? (IsStudent ? 2M : 3M) : 0M;
                 totalPrice += ticketCount * (ticketPrice + addPrice);
 
                 if (weekend.Contains(today) && ticketCount >= 6)
@@ -55,12 +55,12 @@ namespace Sofa3_bioscoop_TonyJonah
             switch (format)
             {
                 case TicketExportFormat.PlainText:
-                    string fileName = $"Order_{orderNr}_PlainText.txt";
+                    string fileName = $"Order_{OrderNr}_PlainText.txt";
 
                     using (StreamWriter writer = new StreamWriter(fileName))
                     {
-                        writer.WriteLine($"Order Number: {orderNr}");
-                        writer.WriteLine($"Is Student: {isStudent}");
+                        writer.WriteLine($"Order Number: {OrderNr}");
+                        writer.WriteLine($"Is Student: {IsStudent}");
                         writer.WriteLine("Movie Tickets:");
 
                         foreach (var ticket in MovieTickets)
@@ -74,7 +74,7 @@ namespace Sofa3_bioscoop_TonyJonah
                     Console.WriteLine($"Order exported to {fileName} in plain text format.");
                     break;
                 case TicketExportFormat.Json:
-                    string file = $"Order_{orderNr}_Json.json";
+                    string file = $"Order_{OrderNr}_Json.json";
 
                     using (StreamWriter writer = new StreamWriter(file))
                     {
