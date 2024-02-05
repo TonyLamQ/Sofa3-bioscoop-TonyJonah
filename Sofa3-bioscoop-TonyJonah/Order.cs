@@ -8,27 +8,27 @@ namespace Sofa3_bioscoop_TonyJonah
         private int orderNr { get; set; }
         private bool isStudent { get; set; }
 
-        private List<MovieTicket> movieTickets { get; set; }
+        private List<MovieTicket> MovieTickets { get; set; }
 
         public Order(int orderNr, bool isStudent)
         {
             this.orderNr = orderNr;
             this.isStudent = isStudent;
-            movieTickets = new List<MovieTicket>();
+            MovieTickets = new List<MovieTicket>();
 
         }
-        public void addSeatReservation(MovieTicket ticket)
+        public void AddSeatReservation(MovieTicket ticket)
         {
-            this.movieTickets.Add(ticket);
+            this.MovieTickets.Add(ticket);
         }
-        public decimal calculatePrice()
+        public decimal CalculatePrice()
         {
             //ToDo: Implement calculatePrice function.
             List<int> duringWeek = new List<int>() { 1, 2, 3, 4 };
             List<int> weekend = new List<int>() { 6, 0 };
             int today = (int)DateTime.Today.DayOfWeek;
             decimal totalPrice = 0.00M;
-            int ticketCount = movieTickets.Count;
+            int ticketCount = MovieTickets.Count;
             if (isStudent)
             {
                 int freeTickets = ticketCount / 2;
@@ -36,7 +36,7 @@ namespace Sofa3_bioscoop_TonyJonah
             }
             for (int i = 0; i < ticketCount; i++)
             {
-                MovieTicket ticket = movieTickets[i];
+                MovieTicket ticket = MovieTickets[i];
                 decimal ticketPrice = (decimal)ticket.getPrice();
                 bool isPremium = ticket.isPremiumTicket();
                 decimal addPrice = isPremium ? (isStudent ? 2M : 3M) : 0M;
@@ -50,7 +50,7 @@ namespace Sofa3_bioscoop_TonyJonah
             return totalPrice;
         }
 
-        public void export(TicketExportFormat format)
+        public void Export(TicketExportFormat format)
         {
             switch (format)
             {
@@ -63,12 +63,12 @@ namespace Sofa3_bioscoop_TonyJonah
                         writer.WriteLine($"Is Student: {isStudent}");
                         writer.WriteLine("Movie Tickets:");
 
-                        foreach (var ticket in movieTickets)
+                        foreach (var ticket in MovieTickets)
                         {
                             writer.WriteLine($"- {ticket}");
                         }
 
-                        writer.WriteLine($"Total Price: {calculatePrice():C}");
+                        writer.WriteLine($"Total Price: {CalculatePrice():C}");
                     }
 
                     Console.WriteLine($"Order exported to {fileName} in plain text format.");

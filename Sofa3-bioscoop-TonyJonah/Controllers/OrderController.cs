@@ -16,9 +16,9 @@ namespace Sofa3_bioscoop_TonyJonah.Controllers
             MovieTicket movieTicket = new MovieTicket(movieScreening, 1, 1, true);
 
             Order order = new Order(1, true);
-            order.addSeatReservation(movieTicket);
+            order.AddSeatReservation(movieTicket);
 
-            order.calculatePrice();
+            order.CalculatePrice();
 
         }
     }
