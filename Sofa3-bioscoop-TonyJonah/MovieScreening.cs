@@ -3,17 +3,17 @@
     public class MovieScreening
     {
         private DateTime DateAndTime { get; set; }
-        private double PricePerSeat { get; set; }
+        private decimal PricePerSeat { get; set; }
         private List<MovieTicket> TicketList { get; set; }
 
 
-        public MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSeat)
+        public MovieScreening(Movie movie, DateTime dateAndTime, decimal pricePerSeat)
         {
             this.DateAndTime = dateAndTime;
             this.PricePerSeat = pricePerSeat;
             this.TicketList = new List<MovieTicket>();
         }
-        public double GetPricePerSeat()
+        public decimal GetPricePerSeat()
         {
             return PricePerSeat;
         }
@@ -24,7 +24,7 @@
         }
         public override string? ToString()
         {
-            return base.ToString();
+            return DateAndTime + " " + PricePerSeat;
         }
     }
 }

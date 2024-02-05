@@ -72,8 +72,9 @@ namespace Sofa3_bioscoop_TonyJonah
             foreach (MovieTicket ticket in MovieTickets)
                 sb.AppendLine(ticket.ToString());
 
-            string path = Path.Combine(Path.GetTempPath(), "", $"docentoscoop_order_{this.OrderNr}.txt");
+            string path = Path.Combine(Path.GetTempPath(), "", $"order_{this.OrderNr}.txt");
             File.WriteAllText(path, sb.ToString());
+            Console.WriteLine(File.ReadAllText(path));
         }
 
         private void ExportToJson()
@@ -98,7 +99,7 @@ namespace Sofa3_bioscoop_TonyJonah
             }
             jsonOrder.Add("tickets", jsonTickets);
 
-            string path = Path.Combine(Path.GetTempPath(), "", $"docentoscoop_order_{this.OrderNr}.json");
+            string path = Path.Combine(Path.GetTempPath(), "", $"order_{this.OrderNr}.json");
             File.WriteAllText(path, jsonOrder.ToString());
         }
     }

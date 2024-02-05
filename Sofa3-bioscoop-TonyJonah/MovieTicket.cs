@@ -19,7 +19,7 @@
         {
             return IsPremium;
         }
-        public double GetPrice()
+        public decimal GetPrice()
         {
             return MovieScreening.GetPricePerSeat();
         }
@@ -30,7 +30,7 @@
         }
         public override string? ToString()
         {
-            return base.ToString();
+            return "Premium Ticket: " + IsPremium + "     |     " + GetScreeningDate() + "     |     " + "price: " + GetPrice();
         }
     }
 }
