@@ -1,12 +1,12 @@
 ﻿namespace Sofa3_bioscoop_TonyJonah
 {
-    public class MovieTicket
+    public abstract class MovieTicket
     {
-        private int RowNr { get; set; }
-        private int SeatNr { get; set; }
+        protected int RowNr { get; set; }
+        protected int SeatNr { get; set; }
 
-        private bool IsPremium { get; set; }
-        private MovieScreening MovieScreening { get; set; }
+        protected bool IsPremium { get; set; }
+        protected MovieScreening MovieScreening { get; set; }
 
         public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium)
         {
@@ -19,8 +19,13 @@
         {
             return IsPremium;
         }
-        public decimal GetPrice()
+        public virtual decimal GetPrice()
         {
+            decimal Price = MovieScreening.GetPricePerSeat();
+            if (IsPremium)
+            {
+                Price += 3M;
+            }
             return MovieScreening.GetPricePerSeat();
         }
 

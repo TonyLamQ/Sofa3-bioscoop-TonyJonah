@@ -8,14 +8,12 @@ namespace Sofa3_bioscoop_TonyJonah
     public class Order
     {
         private int OrderNr { get; set; }
-        private bool IsStudent { get; set; }
 
         private List<MovieTicket> MovieTickets { get; set; }
 
         public Order(int orderNr, bool isStudent)
         {
             this.OrderNr = orderNr;
-            this.IsStudent = isStudent;
             MovieTickets = new List<MovieTicket>();
 
         }
@@ -25,31 +23,48 @@ namespace Sofa3_bioscoop_TonyJonah
         }
         public decimal CalculatePrice()
         {
-            //ToDo: Implement calculatePrice function.
-            List<int> duringWeek = new List<int>() { 1, 2, 3, 4 };
-            List<int> weekend = new List<int>() { 6, 0 };
-            int today = (int)DateTime.Today.DayOfWeek;
-            decimal totalPrice = 0.00M;
-            int ticketCount = MovieTickets.Count;
-            if (IsStudent)
-            {
-                int freeTickets = ticketCount / 2;
-                ticketCount -= freeTickets;
-            }
-            for (int i = 0; i < ticketCount; i++)
+            RemoveFreeTickets();
+            decimal TotalPrice = 0.00M;
+            int Today = (int)DateTime.Today.DayOfWeek;
+            int TicketCount = MovieTickets.Count;
+            List<int> Weekend = new List<int>() { 6, 0 };
+            for (int i = 0; i < this.MovieTickets.Count; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
-                decimal ticketPrice = (decimal)ticket.GetPrice();
-                bool isPremium = ticket.IsPremiumTicket();
-                decimal addPrice = isPremium ? (IsStudent ? 2M : 3M) : 0M;
-                totalPrice += ticketCount * (ticketPrice + addPrice);
+                decimal ticketPrice = ticket.GetPrice();
+                TotalPrice += ticketPrice;
+            }
+            if (Weekend.Contains(Today) && TicketCount >= 6)
+            {
+                TotalPrice *= 0.9M;
+            }
+            return TotalPrice;
+        }
 
-                if (weekend.Contains(today) && ticketCount >= 6)
+        public void RemoveFreeTickets()
+        {
+            int TicketCount = MovieTickets.Count;
+            int StudentTickets = 0;
+            for (int i = 0;i < TicketCount; i++)
+            {
+                MovieTicket ticket = MovieTickets[i];
+                if (ticket.IsStudentTicket())
                 {
-                    totalPrice *= 0.9M;
+                    StudentTickets++;
                 }
             }
-            return totalPrice;
+            int freeTickets = StudentTickets / 2;
+            this.MovieTickets.Sort((x, y) => x.GetPrice().CompareTo(y.GetPrice()));
+
+            for (int i = 0; freeTickets > 0 && i < MovieTickets.Count; i++)
+            {
+                if (MovieTickets[i].IsStudentTicket())
+                {
+                    MovieTickets.RemoveAt(i);
+                    i--;
+                    freeTickets--;
+                }
+            }
         }
 
         public void Export(TicketExportFormat format)
