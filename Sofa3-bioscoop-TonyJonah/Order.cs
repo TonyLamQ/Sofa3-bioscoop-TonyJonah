@@ -11,7 +11,7 @@ namespace Sofa3_bioscoop_TonyJonah
 
         private List<MovieTicket> MovieTickets { get; set; }
 
-        public Order(int orderNr, bool isStudent)
+        public Order(int orderNr)
         {
             this.OrderNr = orderNr;
             MovieTickets = new List<MovieTicket>();
@@ -48,7 +48,7 @@ namespace Sofa3_bioscoop_TonyJonah
             for (int i = 0;i < TicketCount; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
-                if (ticket.IsStudentTicket())
+                if (ticket is StudentMovieTicket)
                 {
                     StudentTickets++;
                 }
@@ -58,7 +58,7 @@ namespace Sofa3_bioscoop_TonyJonah
 
             for (int i = 0; freeTickets > 0 && i < MovieTickets.Count; i++)
             {
-                if (MovieTickets[i].IsStudentTicket())
+                if (MovieTickets[i] is StudentMovieTicket)
                 {
                     MovieTickets.RemoveAt(i);
                     i--;
