@@ -20,7 +20,7 @@ namespace bioscoopTestProject
             Order order = CreateOrder(7, 10M, true, true);
             decimal price = order.CalculatePrice();
 
-            Assert.Equal(63M, price);
+            Assert.Equal(81.90M, price);
 
         }
         
@@ -62,7 +62,7 @@ namespace bioscoopTestProject
             MovieScreening movieScreening = new MovieScreening(movie, date, basePrice);
             Order order = new Order(1);
             for (int i = 0; i < numberOfTickets; i++)
-                order.AddSeatReservation(new MovieTicket(movieScreening, 1, 1, isPremium));
+                order.AddSeatReservation(new RegularMovieTicket(movieScreening, 1, 1, isPremium));
             return order;
         }
     }
