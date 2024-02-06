@@ -9,12 +9,12 @@
 
         public override decimal GetPrice()
         {
-            decimal Price = this.MovieScreening.GetPricePerSeat();
+            decimal price = this.MovieScreening.GetPricePerSeat();
             if (this.IsPremium)
             {
-                Price += 2M;
+                price += 2M;
             }
-            return Price;
+            return price;
         }
     }
 }

@@ -73,10 +73,10 @@ namespace Sofa3_bioscoop_TonyJonah
         {
             switch (format)
             {
-                case TicketExportFormat.PLAINTEXT:
+                case TicketExportFormat.PlainText:
                     ExportToPlainText();
                     break;
-                case TicketExportFormat.JSON:
+                case TicketExportFormat.Json:
                     ExportToJson();
                     break;
             }
