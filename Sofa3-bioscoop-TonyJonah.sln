@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sofa3-bioscoop-TonyJonah", "Sofa3-bioscoop-TonyJonah\Sofa3-bioscoop-TonyJonah.csproj", "{F8E8A7BB-E2AF-4F65-A07B-F031A5B19EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sofa3-bioscoop-TonyJonah", "Sofa3-bioscoop-TonyJonah\Sofa3-bioscoop-TonyJonah.csproj", "{F8E8A7BB-E2AF-4F65-A07B-F031A5B19EBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bioscoopTestProject", "bioscoopTestProject\bioscoopTestProject.csproj", "{7F35A4FF-B30C-475E-8E35-8E31AF861241}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F8E8A7BB-E2AF-4F65-A07B-F031A5B19EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E8A7BB-E2AF-4F65-A07B-F031A5B19EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8E8A7BB-E2AF-4F65-A07B-F031A5B19EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F35A4FF-B30C-475E-8E35-8E31AF861241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F35A4FF-B30C-475E-8E35-8E31AF861241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F35A4FF-B30C-475E-8E35-8E31AF861241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F35A4FF-B30C-475E-8E35-8E31AF861241}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
