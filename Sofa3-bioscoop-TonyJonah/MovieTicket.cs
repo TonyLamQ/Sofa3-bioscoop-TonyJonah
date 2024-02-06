@@ -19,15 +19,7 @@
         {
             return IsPremium;
         }
-        public virtual decimal GetPrice()
-        {
-            decimal Price = MovieScreening.GetPricePerSeat();
-            if (IsPremium)
-            {
-                Price += 3M;
-            }
-            return MovieScreening.GetPricePerSeat();
-        }
+        public virtual decimal GetPrice() {  return 0; }
 
         public DateTime GetScreeningDate()
         {
