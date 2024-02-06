@@ -24,36 +24,36 @@ namespace Sofa3_bioscoop_TonyJonah
         public decimal CalculatePrice()
         {
             RemoveFreeTickets();
-            decimal TotalPrice = 0.00M;
-            int Today = (int)DateTime.Today.DayOfWeek;
-            int TicketCount = MovieTickets.Count;
-            List<int> Weekend = new List<int>() { 6, 0 };
+            decimal totalPrice = 0.00M;
+            int today = (int)DateTime.Today.DayOfWeek;
+            int ticketCount = MovieTickets.Count;
+            List<int> weekend = new List<int>() { 6, 0 };
             for (int i = 0; i < this.MovieTickets.Count; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
                 decimal ticketPrice = ticket.GetPrice();
-                TotalPrice += ticketPrice;
+                totalPrice += ticketPrice;
             }
-            if (Weekend.Contains(Today) && TicketCount >= 6)
+            if (weekend.Contains(today) && ticketCount >= 6)
             {
-                TotalPrice *= 0.9M;
+                totalPrice *= 0.9M;
             }
-            return TotalPrice;
+            return totalPrice;
         }
 
         public void RemoveFreeTickets()
         {
-            int TicketCount = MovieTickets.Count;
-            int StudentTickets = 0;
-            for (int i = 0;i < TicketCount; i++)
+            int ticketCount = MovieTickets.Count;
+            int studentTickets = 0;
+            for (int i = 0;i < ticketCount; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
                 if (ticket is StudentMovieTicket)
                 {
-                    StudentTickets++;
+                    studentTickets++;
                 }
             }
-            int freeTickets = StudentTickets / 2;
+            int freeTickets = studentTickets / 2;
             this.MovieTickets.Sort((x, y) => x.GetPrice().CompareTo(y.GetPrice()));
 
             for (int i = 0; freeTickets > 0 && i < MovieTickets.Count; i++)
@@ -97,7 +97,6 @@ namespace Sofa3_bioscoop_TonyJonah
             JsonObject jsonOrder = new JsonObject
             {
                 { "orderNr", this.OrderNr },
-                { "isStudentOrder", this.IsStudent },
                 { "totalPrice", this.CalculatePrice() }
             };
 

@@ -31,17 +31,17 @@ namespace Sofa3_bioscoop_TonyJonah.Controllers
             MovieTicket premiumMovieTicket = new MovieTicket(movieScreening, 1, 1, true);
 
 // Create a non-student order
-            Order order = new Order(1, false);
+            Order order = new Order(1);
             order.AddSeatReservation(premiumMovieTicket);
             order.AddSeatReservation(movieTicket); // This ticket should be free because it's the second ticket
 
 // Create a student order
-            Order studentOrder = new Order(2, true);
+            Order studentOrder = new Order(2);
             studentOrder.AddSeatReservation(premiumMovieTicket);
             studentOrder.AddSeatReservation(movieTicket); // This ticket should be free because it's the second
 
 // Create a non-student order with 6 tickets for a weekend screening
-            Order groupOrder = new Order(3, false);
+            Order groupOrder = new Order(3);
             for (int i = 0; i < 6; i++)
                 groupOrder.AddSeatReservation(new MovieTicket(weekendMovieScreening, 1, i + 1, true));
             
