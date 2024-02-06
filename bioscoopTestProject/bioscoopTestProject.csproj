@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sofa3-bioscoop-TonyJonah\Sofa3-bioscoop-TonyJonah.csproj" />
+  </ItemGroup>
+
 </Project>
