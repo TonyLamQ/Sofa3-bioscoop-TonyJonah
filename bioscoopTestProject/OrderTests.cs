@@ -42,6 +42,22 @@ namespace bioscoopTestProject
             Assert.Equal(10M, price);
         }
         
+        [Fact]
+        public void Export_WhenFormatIsPlainText_ShouldExportToPlainTextFile()
+        {
+            // Arrange
+            Order order = CreateOrder(1, 10M, false, true);
+            var expectedFilePath = Path.Combine(Path.GetTempPath(), "", $"order_1.txt");
+
+            // Act
+            order.Export(TicketExportFormat.PlainText);
+
+            // Assert
+            Assert.True(File.Exists(expectedFilePath));
+            var fileContent = File.ReadAllText(expectedFilePath);
+        }
+
+        
         private static Order CreateStudentOrder(int numberOfTickets, decimal basePrice, bool isPremium, bool isWeekend)
         {
             Movie movie = new Movie("The Matrix");
