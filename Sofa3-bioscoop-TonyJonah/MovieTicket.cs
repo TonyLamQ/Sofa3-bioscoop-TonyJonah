@@ -9,9 +9,6 @@
         private MovieScreening MovieScreening { get; set; }
 
         private readonly ITicketPrice TicketPrice;
-
-
-
         public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium, ITicketPrice ticketPrice)
         {
             this.MovieScreening = movieScreening;
