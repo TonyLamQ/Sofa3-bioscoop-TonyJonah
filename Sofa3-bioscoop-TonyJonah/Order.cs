@@ -48,7 +48,7 @@ namespace Sofa3_bioscoop_TonyJonah
             for (int i = 0;i < ticketCount; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
-                if (ticket is StudentMovieTicket)
+                if (ticket is StudentTicketPrice)
                 {
                     studentTickets++;
                 }
@@ -58,7 +58,7 @@ namespace Sofa3_bioscoop_TonyJonah
 
             for (int i = 0; freeTickets > 0 && i < MovieTickets.Count; i++)
             {
-                if (MovieTickets[i] is StudentMovieTicket)
+                if (MovieTickets[i] is StudentTicketPrice)
                 {
                     MovieTickets.RemoveAt(i);
                     i--;

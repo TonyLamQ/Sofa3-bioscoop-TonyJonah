@@ -1,29 +1,41 @@
 ﻿namespace Sofa3_bioscoop_TonyJonah
 {
-    public abstract class MovieTicket
+    public class MovieTicket
     {
-        protected int RowNr { get; set; }
-        protected int SeatNr { get; set; }
+        private int RowNr { get; set; }
+        private int SeatNr { get; set; }
 
-        protected bool IsPremium { get; set; }
-        protected MovieScreening MovieScreening { get; set; }
+        private bool IsPremium { get; set; }
+        private MovieScreening MovieScreening { get; set; }
 
-        public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium)
+        private readonly ITicketPrice TicketPrice;
+
+
+
+        public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium, ITicketPrice ticketPrice)
         {
             this.MovieScreening = movieScreening;
             this.RowNr = rowNr;
             this.SeatNr = seatNr;
             this.IsPremium = isPremium;
+            this.TicketPrice = ticketPrice;
         }
         public bool IsPremiumTicket()
         {
             return IsPremium;
         }
-        public virtual decimal GetPrice() {  return 0; }
+        public MovieScreening GetMovieScreening()
+        {
+            return MovieScreening;
+        }
 
         public DateTime GetScreeningDate()
         {
             return MovieScreening.GetDate();
+        }
+
+        public decimal GetPrice() {
+            return TicketPrice.GetPrice(this);
         }
         public override string? ToString()
         {
