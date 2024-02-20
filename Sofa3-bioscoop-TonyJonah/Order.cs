@@ -25,18 +25,20 @@ namespace Sofa3_bioscoop_TonyJonah
         {
             RemoveFreeTickets();
             decimal totalPrice = 0.00M;
-            int today = (int)DateTime.Today.DayOfWeek;
             int ticketCount = MovieTickets.Count;
-            List<int> weekend = new List<int>() { 6, 0 };
-            for (int i = 0; i < this.MovieTickets.Count; i++)
+            for (int i = 0; i < ticketCount; i++)
             {
                 MovieTicket ticket = MovieTickets[i];
+                DateTime screeningDate = ticket.GetScreeningDate();
+
+                bool isWeekend = screeningDate.DayOfWeek == DayOfWeek.Saturday || screeningDate.DayOfWeek == DayOfWeek.Sunday;
                 decimal ticketPrice = ticket.GetPrice();
+
+                if (isWeekend && ticketCount >= 6 && ticket is not StudentMovieTicket)
+                {
+                    ticketPrice *= 0.9M;
+                }
                 totalPrice += ticketPrice;
-            }
-            if (weekend.Contains(today) && ticketCount >= 6)
-            {
-                totalPrice *= 0.9M;
             }
             return totalPrice;
         }
@@ -71,10 +73,10 @@ namespace Sofa3_bioscoop_TonyJonah
         {
             switch (format)
             {
-                case TicketExportFormat.PLAINTEXT:
+                case TicketExportFormat.PlainText:
                     ExportToPlainText();
                     break;
-                case TicketExportFormat.JSON:
+                case TicketExportFormat.Json:
                     ExportToJson();
                     break;
             }

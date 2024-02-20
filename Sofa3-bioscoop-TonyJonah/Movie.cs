@@ -15,10 +15,5 @@
         {
             this.movieScreenings.Add(screening);
         }
-
-        public override string? ToString()
-        {
-            return base.ToString();
-        }
     }
 }

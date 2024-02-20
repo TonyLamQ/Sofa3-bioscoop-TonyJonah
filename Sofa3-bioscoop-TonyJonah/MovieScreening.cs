@@ -5,10 +5,12 @@
         private DateTime DateAndTime { get; set; }
         private decimal PricePerSeat { get; set; }
         private List<MovieTicket> TicketList { get; set; }
-
-
+        
+        private Movie Movie { get; set; }
+        
         public MovieScreening(Movie movie, DateTime dateAndTime, decimal pricePerSeat)
         {
+            this.Movie = movie;
             this.DateAndTime = dateAndTime;
             this.PricePerSeat = pricePerSeat;
             this.TicketList = new List<MovieTicket>();
